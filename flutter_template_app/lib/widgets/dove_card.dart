@@ -129,12 +129,27 @@ class DoveCard extends StatelessWidget {
   }
 
   void _launchUrl(BuildContext context, String url) {
-    if (url.isEmpty) return;
+    if (url.isEmpty) {
+      debugPrint('Empty URL, cannot launch WebView');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Cannot open article: URL is empty')),
+      );
+      return;
+    }
+
+    debugPrint('Launching WebView with URL: $url');
+
+    // Ensure the URL has a scheme
+    String finalUrl = url;
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      finalUrl = 'https://$url';
+      debugPrint('Added https:// scheme to URL: $finalUrl');
+    }
 
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => WebViewScreen(
-          url: url,
+          url: finalUrl,
           title: article.title,
         ),
       ),

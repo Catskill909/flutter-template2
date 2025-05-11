@@ -25,7 +25,26 @@ class _WebViewScreenState extends State<WebViewScreen> {
   String currentUrl = '';
 
   @override
+  void initState() {
+    super.initState();
+    debugPrint('WebViewScreen - initState with URL: ${widget.url}');
+
+    // Validate URL format
+    try {
+      final uri = Uri.parse(widget.url);
+      debugPrint(
+          'Parsed URI - scheme: ${uri.scheme}, host: ${uri.host}, path: ${uri.path}');
+      if (uri.scheme.isEmpty) {
+        debugPrint('WARNING: URL has no scheme, this may cause issues on iOS');
+      }
+    } catch (e) {
+      debugPrint('ERROR parsing URL: $e');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    debugPrint('WebViewScreen - building with URL: ${widget.url}');
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -75,7 +94,17 @@ class _WebViewScreenState extends State<WebViewScreen> {
           Expanded(
             child: InAppWebView(
               key: webViewKey,
-              initialUrlRequest: URLRequest(url: WebUri(widget.url)),
+              // Ensure URL has a scheme for iOS
+              initialUrlRequest: URLRequest(
+                url: WebUri(_ensureUrlHasScheme(widget.url)),
+                headers: {
+                  // Add headers to help with potential CORS issues
+                  'Accept':
+                      'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                  'User-Agent':
+                      'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1'
+                },
+              ),
               initialSettings: InAppWebViewSettings(
                 useShouldOverrideUrlLoading: true,
                 mediaPlaybackRequiresUserGesture: false,
@@ -88,6 +117,10 @@ class _WebViewScreenState extends State<WebViewScreen> {
                 allowContentAccess: true,
                 allowFileAccess: true,
                 allowsInlineMediaPlayback: true,
+                allowsLinkPreview: true,
+                // Additional iOS-specific settings
+                limitsNavigationsToAppBoundDomains: false,
+                allowsBackForwardNavigationGestures: true,
               ),
               onWebViewCreated: (controller) {
                 webViewController = controller;
@@ -113,6 +146,17 @@ class _WebViewScreenState extends State<WebViewScreen> {
                 // Using debugPrint instead of print for development logging
                 debugPrint("Console Message: ${consoleMessage.message}");
               },
+              onReceivedError: (controller, request, error) {
+                debugPrint(
+                    "WebView Error: ${error.description} (${error.type}) - URL: ${request.url}");
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                        content:
+                            Text('Error loading page: ${error.description}')),
+                  );
+                }
+              },
             ),
           ),
         ],
@@ -132,5 +176,23 @@ class _WebViewScreenState extends State<WebViewScreen> {
         );
       }
     }
+  }
+
+  // Helper method to ensure URL has a scheme (http:// or https://)
+  String _ensureUrlHasScheme(String url) {
+    debugPrint('Checking URL scheme: $url');
+    if (url.isEmpty) {
+      debugPrint('Empty URL, returning default https://example.com');
+      return 'https://example.com';
+    }
+
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      final newUrl = 'https://$url';
+      debugPrint('Added https:// scheme to URL: $newUrl');
+      return newUrl;
+    }
+
+    debugPrint('URL already has scheme: $url');
+    return url;
   }
 }
