@@ -61,20 +61,36 @@ class _WebViewScreenState extends State<WebViewScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         actions: [
+          // Refresh button
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
               webViewController?.reload();
             },
           ),
+          // Open in browser button
           IconButton(
             icon: const Icon(Icons.open_in_browser),
             onPressed: () async {
+              // Try to get current URL first
               final url = await webViewController?.getUrl();
               if (url != null) {
                 final Uri uri = Uri.parse(url.toString());
                 await launchExternalBrowser(uri);
+              } else {
+                // Fallback to original URL
+                final Uri uri = Uri.parse(widget.url);
+                await launchExternalBrowser(uri);
               }
+            },
+          ),
+          // Safari button (specifically for iOS)
+          IconButton(
+            icon: const Icon(Icons.ios_share),
+            tooltip: 'Open in Safari',
+            onPressed: () {
+              final Uri uri = Uri.parse(widget.url);
+              launchUrl(uri, mode: LaunchMode.externalApplication);
             },
           ),
         ],
@@ -94,36 +110,56 @@ class _WebViewScreenState extends State<WebViewScreen> {
           Expanded(
             child: InAppWebView(
               key: webViewKey,
-              // Ensure URL has a scheme for iOS
+              // Use a simpler URL initialization for iOS
               initialUrlRequest: URLRequest(
                 url: WebUri(_ensureUrlHasScheme(widget.url)),
-                headers: {
-                  // Add headers to help with potential CORS issues
-                  'Accept':
-                      'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-                  'User-Agent':
-                      'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1'
-                },
               ),
               initialSettings: InAppWebViewSettings(
-                useShouldOverrideUrlLoading: true,
-                mediaPlaybackRequiresUserGesture: false,
+                // Basic settings that should work on iOS
                 javaScriptEnabled: true,
                 javaScriptCanOpenWindowsAutomatically: true,
-                supportZoom: true,
-                useHybridComposition: true,
-                domStorageEnabled: true,
-                databaseEnabled: true,
-                allowContentAccess: true,
-                allowFileAccess: true,
+                useOnLoadResource: true,
+                useShouldOverrideUrlLoading: true,
+                mediaPlaybackRequiresUserGesture: false,
                 allowsInlineMediaPlayback: true,
-                allowsLinkPreview: true,
-                // Additional iOS-specific settings
-                limitsNavigationsToAppBoundDomains: false,
-                allowsBackForwardNavigationGestures: true,
               ),
               onWebViewCreated: (controller) {
                 webViewController = controller;
+
+                // Try loading the URL directly after WebView is created
+                // This can help on iOS where the initialUrlRequest might not work properly
+                debugPrint(
+                    "WebView created, loading URL directly: ${widget.url}");
+
+                // First try loading a simple HTML content to test if WebView works at all
+                controller.loadData(
+                  data: """
+                  <html>
+                    <head>
+                      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                      <style>
+                        body { font-family: sans-serif; padding: 20px; }
+                        .loading { text-align: center; margin-top: 50px; }
+                        .btn { background: #007AFF; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block; margin-top: 20px; }
+                      </style>
+                    </head>
+                    <body>
+                      <div class="loading">
+                        <h2>Loading content...</h2>
+                        <p>Redirecting to: ${widget.url}</p>
+                      </div>
+                      <script>
+                        // Redirect after a short delay
+                        setTimeout(function() {
+                          window.location.href = "${_ensureUrlHasScheme(widget.url)}";
+                        }, 1000);
+                      </script>
+                    </body>
+                  </html>
+                  """,
+                  mimeType: 'text/html',
+                  encoding: 'utf-8',
+                );
               },
               onLoadStart: (controller, url) {
                 setState(() {
@@ -149,11 +185,13 @@ class _WebViewScreenState extends State<WebViewScreen> {
               onReceivedError: (controller, request, error) {
                 debugPrint(
                     "WebView Error: ${error.description} (${error.type}) - URL: ${request.url}");
+
+                // Show error message
                 if (mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                        content:
-                            Text('Error loading page: ${error.description}')),
+                      content: Text('Error loading page: ${error.description}'),
+                    ),
                   );
                 }
               },
