@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -39,6 +40,12 @@ class _WebViewScreenState extends State<WebViewScreen> {
       }
     } catch (e) {
       debugPrint('ERROR parsing URL: $e');
+    }
+
+    // Configure WebView for iOS
+    if (Platform.isIOS) {
+      debugPrint('Configuring WebView for iOS');
+      InAppWebViewController.setWebContentsDebuggingEnabled(true);
     }
   }
 
@@ -118,10 +125,21 @@ class _WebViewScreenState extends State<WebViewScreen> {
                 // Basic settings that should work on iOS
                 javaScriptEnabled: true,
                 javaScriptCanOpenWindowsAutomatically: true,
-                useOnLoadResource: true,
-                useShouldOverrideUrlLoading: true,
-                mediaPlaybackRequiresUserGesture: false,
+
+                // iOS-specific settings
                 allowsInlineMediaPlayback: true,
+
+                // Disable settings that might cause issues on iOS
+                useOnLoadResource: false,
+                useShouldOverrideUrlLoading: false,
+                mediaPlaybackRequiresUserGesture: false,
+
+                // Add iOS-specific settings
+                transparentBackground: true,
+                disableVerticalScroll: false,
+                disableHorizontalScroll: false,
+                disableContextMenu: false,
+                supportZoom: true,
               ),
               onWebViewCreated: (controller) {
                 webViewController = controller;
@@ -131,35 +149,40 @@ class _WebViewScreenState extends State<WebViewScreen> {
                 debugPrint(
                     "WebView created, loading URL directly: ${widget.url}");
 
-                // First try loading a simple HTML content to test if WebView works at all
-                controller.loadData(
-                  data: """
-                  <html>
-                    <head>
-                      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                      <style>
-                        body { font-family: sans-serif; padding: 20px; }
-                        .loading { text-align: center; margin-top: 50px; }
-                        .btn { background: #007AFF; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block; margin-top: 20px; }
-                      </style>
-                    </head>
-                    <body>
-                      <div class="loading">
-                        <h2>Loading content...</h2>
-                        <p>Redirecting to: ${widget.url}</p>
-                      </div>
-                      <script>
-                        // Redirect after a short delay
-                        setTimeout(function() {
-                          window.location.href = "${_ensureUrlHasScheme(widget.url)}";
-                        }, 1000);
-                      </script>
-                    </body>
-                  </html>
-                  """,
-                  mimeType: 'text/html',
-                  encoding: 'utf-8',
-                );
+                // Try direct loading with a different approach for iOS
+                if (Platform.isIOS) {
+                  debugPrint("Using iOS-specific loading approach");
+
+                  // First load a blank page to ensure WebView is initialized properly
+                  controller.loadUrl(
+                    urlRequest: URLRequest(
+                      url: WebUri("about:blank"),
+                    ),
+                  );
+
+                  // Then load the actual URL after a short delay
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    debugPrint(
+                        "Now loading the actual URL after delay: ${widget.url}");
+                    controller.loadUrl(
+                      urlRequest: URLRequest(
+                        url: WebUri(_ensureUrlHasScheme(widget.url)),
+                        headers: {
+                          "Accept":
+                              "text/html,application/xhtml+xml,application/xml",
+                          "Cache-Control": "no-cache",
+                        },
+                      ),
+                    );
+                  });
+                } else {
+                  // For Android, load directly
+                  controller.loadUrl(
+                    urlRequest: URLRequest(
+                      url: WebUri(_ensureUrlHasScheme(widget.url)),
+                    ),
+                  );
+                }
               },
               onLoadStart: (controller, url) {
                 setState(() {
