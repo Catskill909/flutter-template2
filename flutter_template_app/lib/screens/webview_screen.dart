@@ -41,9 +41,6 @@ class _WebViewScreenState extends State<WebViewScreen> {
     } catch (e) {
       debugPrint('ERROR parsing URL: $e');
     }
-
-    // Enable WebView debugging for development
-    InAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
 
   @override
