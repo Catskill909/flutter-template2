@@ -1,0 +1,2 @@
+/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/android/app/.cxx/Debug/3x4l602w/x86_64/CMakeFiles/edit_cache.dir
+/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/android/app/.cxx/Debug/3x4l602w/x86_64/CMakeFiles/rebuild_cache.dir

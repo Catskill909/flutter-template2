@@ -47,151 +47,289 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Determine if we're on a tablet/desktop
+    final isLargeScreen = MediaQuery.of(context).size.width > 600;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
           _titles[_selectedIndex],
           style: GoogleFonts.oswald(
             fontWeight: FontWeight.bold,
-            fontSize: 24,
+            fontSize: isLargeScreen ? 32 : 24, // Larger font for tablet/desktop
           ),
         ),
         centerTitle: true,
+        toolbarHeight:
+            isLargeScreen ? 72 : 56, // Taller AppBar for tablet/desktop
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.white24,
-                    child: Icon(Icons.person, size: 40, color: Colors.white),
+      drawer: Builder(
+        builder: (context) {
+          // Determine if we're on a tablet/desktop
+          final isLargeScreen = MediaQuery.of(context).size.width > 600;
+
+          return Drawer(
+            width: isLargeScreen ? 320 : 280, // Wider drawer for tablet/desktop
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'Flutter Template',
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      CircleAvatar(
+                        radius: isLargeScreen
+                            ? 40
+                            : 30, // Larger avatar for tablet/desktop
+                        backgroundColor: Colors.white24,
+                        child: Icon(
+                          Icons.person,
+                          size: isLargeScreen
+                              ? 50
+                              : 40, // Larger icon for tablet/desktop
                           color: Colors.white,
-                          fontWeight: FontWeight.bold,
                         ),
+                      ),
+                      SizedBox(
+                          height: isLargeScreen
+                              ? 16
+                              : 10), // More spacing for tablet/desktop
+                      Text(
+                        'Flutter Template',
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: isLargeScreen
+                                      ? 24
+                                      : null, // Larger text for tablet/desktop
+                                ),
+                      ),
+                      Text(
+                        'template@example.com',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Colors.white70,
+                              fontSize: isLargeScreen
+                                  ? 16
+                                  : null, // Larger text for tablet/desktop
+                            ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'template@example.com',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.white70,
-                        ),
+                ),
+                // Internal navigation items
+                ListTile(
+                  leading: Icon(
+                    Icons.explore,
+                    size: isLargeScreen
+                        ? 28
+                        : 24, // Larger icon for tablet/desktop
                   ),
-                ],
-              ),
+                  title: Text(
+                    'Dove Trail',
+                    style: TextStyle(
+                      fontSize: isLargeScreen
+                          ? 18
+                          : 16, // Larger text for tablet/desktop
+                    ),
+                  ),
+                  selected: _selectedIndex == 0,
+                  onTap: () {
+                    _onItemTapped(0);
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.favorite,
+                    size: isLargeScreen ? 28 : 24,
+                  ),
+                  title: Text(
+                    'Tab 2',
+                    style: TextStyle(
+                      fontSize: isLargeScreen ? 18 : 16,
+                    ),
+                  ),
+                  selected: _selectedIndex == 1,
+                  onTap: () {
+                    _onItemTapped(1);
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.notifications,
+                    size: isLargeScreen ? 28 : 24,
+                  ),
+                  title: Text(
+                    'Tab 3',
+                    style: TextStyle(
+                      fontSize: isLargeScreen ? 18 : 16,
+                    ),
+                  ),
+                  selected: _selectedIndex == 2,
+                  onTap: () {
+                    _onItemTapped(2);
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.person,
+                    size: isLargeScreen ? 28 : 24,
+                  ),
+                  title: Text(
+                    'Tab 4',
+                    style: TextStyle(
+                      fontSize: isLargeScreen ? 18 : 16,
+                    ),
+                  ),
+                  selected: _selectedIndex == 3,
+                  onTap: () {
+                    _onItemTapped(3);
+                    Navigator.pop(context);
+                  },
+                ),
+                const Divider(),
+                // External links
+                ListTile(
+                  leading: Icon(
+                    Icons.language,
+                    size: isLargeScreen ? 28 : 24,
+                  ),
+                  title: Text(
+                    'Website',
+                    style: TextStyle(
+                      fontSize: isLargeScreen ? 18 : 16,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _launchUrl('https://flutter.dev');
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.code,
+                    size: isLargeScreen ? 28 : 24,
+                  ),
+                  title: Text(
+                    'GitHub',
+                    style: TextStyle(
+                      fontSize: isLargeScreen ? 18 : 16,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _launchUrl('https://github.com/flutter/flutter');
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.help,
+                    size: isLargeScreen ? 28 : 24,
+                  ),
+                  title: Text(
+                    'Help Center',
+                    style: TextStyle(
+                      fontSize: isLargeScreen ? 18 : 16,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _launchUrl('https://docs.flutter.dev');
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.info,
+                    size: isLargeScreen ? 28 : 24,
+                  ),
+                  title: Text(
+                    'About',
+                    style: TextStyle(
+                      fontSize: isLargeScreen ? 18 : 16,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _launchUrl('https://flutter.dev/about');
+                  },
+                ),
+              ],
             ),
-            // Internal navigation items
-            ListTile(
-              leading: const Icon(Icons.explore),
-              title: const Text('Dove Trail'),
-              selected: _selectedIndex == 0,
-              onTap: () {
-                _onItemTapped(0);
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.favorite),
-              title: const Text('Tab 2'),
-              selected: _selectedIndex == 1,
-              onTap: () {
-                _onItemTapped(1);
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.notifications),
-              title: const Text('Tab 3'),
-              selected: _selectedIndex == 2,
-              onTap: () {
-                _onItemTapped(2);
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Tab 4'),
-              selected: _selectedIndex == 3,
-              onTap: () {
-                _onItemTapped(3);
-                Navigator.pop(context);
-              },
-            ),
-            const Divider(),
-            // External links
-            ListTile(
-              leading: const Icon(Icons.language),
-              title: const Text('Website'),
-              onTap: () {
-                Navigator.pop(context);
-                _launchUrl('https://flutter.dev');
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.code),
-              title: const Text('GitHub'),
-              onTap: () {
-                Navigator.pop(context);
-                _launchUrl('https://github.com/flutter/flutter');
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.help),
-              title: const Text('Help Center'),
-              onTap: () {
-                Navigator.pop(context);
-                _launchUrl('https://docs.flutter.dev');
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.info),
-              title: const Text('About'),
-              onTap: () {
-                Navigator.pop(context);
-                _launchUrl('https://flutter.dev/about');
-              },
-            ),
-          ],
-        ),
+          );
+        },
       ),
       body: _screens[_selectedIndex],
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: _onItemTapped,
-        selectedIndex: _selectedIndex,
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.explore_outlined),
-            selectedIcon: Icon(Icons.explore),
-            label: 'Dove Trail',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.favorite_outline),
-            selectedIcon: Icon(Icons.favorite),
-            label: 'Tab 2',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.notifications_outlined),
-            selectedIcon: Icon(Icons.notifications),
-            label: 'Tab 3',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outline),
-            selectedIcon: Icon(Icons.person),
-            label: 'Tab 4',
-          ),
-        ],
+      bottomNavigationBar: Builder(
+        builder: (context) {
+          // Determine if we're on a tablet/desktop
+          final isLargeScreen = MediaQuery.of(context).size.width > 600;
+
+          return NavigationBar(
+            onDestinationSelected: _onItemTapped,
+            selectedIndex: _selectedIndex,
+            height: isLargeScreen
+                ? 80
+                : 60, // Taller navigation bar for tablet/desktop
+            labelBehavior: isLargeScreen
+                ? NavigationDestinationLabelBehavior.alwaysShow
+                : NavigationDestinationLabelBehavior.onlyShowSelected,
+            destinations: [
+              NavigationDestination(
+                icon: Icon(
+                  Icons.explore_outlined,
+                  size: isLargeScreen
+                      ? 32
+                      : 24, // Larger icons for tablet/desktop
+                ),
+                selectedIcon: Icon(
+                  Icons.explore,
+                  size: isLargeScreen ? 32 : 24,
+                ),
+                label: 'Dove Trail',
+              ),
+              NavigationDestination(
+                icon: Icon(
+                  Icons.favorite_outline,
+                  size: isLargeScreen ? 32 : 24,
+                ),
+                selectedIcon: Icon(
+                  Icons.favorite,
+                  size: isLargeScreen ? 32 : 24,
+                ),
+                label: 'Tab 2',
+              ),
+              NavigationDestination(
+                icon: Icon(
+                  Icons.notifications_outlined,
+                  size: isLargeScreen ? 32 : 24,
+                ),
+                selectedIcon: Icon(
+                  Icons.notifications,
+                  size: isLargeScreen ? 32 : 24,
+                ),
+                label: 'Tab 3',
+              ),
+              NavigationDestination(
+                icon: Icon(
+                  Icons.person_outline,
+                  size: isLargeScreen ? 32 : 24,
+                ),
+                selectedIcon: Icon(
+                  Icons.person,
+                  size: isLargeScreen ? 32 : 24,
+                ),
+                label: 'Tab 4',
+              ),
+            ],
+          );
+        },
       ),
     );
   }

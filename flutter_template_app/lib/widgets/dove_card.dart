@@ -24,8 +24,9 @@ class DoveCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Image with title overlay
-            Expanded(
+            // Force landscape aspect ratio for the entire card content
+            AspectRatio(
+              aspectRatio: 16 / 9,
               child: Stack(
                 alignment: Alignment.bottomLeft,
                 children: [

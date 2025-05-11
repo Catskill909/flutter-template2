@@ -8,7 +8,7 @@ Place your splash screen images in this directory:
 ## Requirements
 
 - PNG format is recommended
-- Recommended size: 1080x1080 pixels (square)
+- Recommended size: 1920x1080 pixels (landscape/16:9 aspect ratio)
 - Keep the image simple and centered
 - For best results, use a transparent background
 - The image should be visually appealing on both light and dark backgrounds

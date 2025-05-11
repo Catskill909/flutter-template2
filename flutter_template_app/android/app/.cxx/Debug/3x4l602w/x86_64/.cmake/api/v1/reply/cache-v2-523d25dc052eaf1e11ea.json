@@ -11,7 +11,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "arm64-v8a"
+			"value" : "x86_64"
 		},
 		{
 			"name" : "ANDROID_NDK",
@@ -23,7 +23,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264"
+			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973"
 		},
 		{
 			"name" : "ANDROID_PLATFORM",
@@ -51,7 +51,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-addr2line"
+			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-addr2line"
 		},
 		{
 			"name" : "CMAKE_ANDROID_ARCH_ABI",
@@ -63,7 +63,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "arm64-v8a"
+			"value" : "x86_64"
 		},
 		{
 			"name" : "CMAKE_ANDROID_NDK",
@@ -75,7 +75,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264"
+			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973"
 		},
 		{
 			"name" : "CMAKE_AR",
@@ -91,7 +91,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar"
+			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar"
 		},
 		{
 			"name" : "CMAKE_ASM_FLAGS",
@@ -151,7 +151,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/android/app/.cxx/Debug/3x4l602w/arm64-v8a"
+			"value" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/android/app/.cxx/Debug/3x4l602w/x86_64"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -763,7 +763,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/build/app/intermediates/cxx/Debug/3x4l602w/obj/arm64-v8a"
+			"value" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/build/app/intermediates/cxx/Debug/3x4l602w/obj/x86_64"
 		},
 		{
 			"name" : "CMAKE_LINKER",
@@ -779,7 +779,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/ld.lld"
+			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/ld.lld"
 		},
 		{
 			"name" : "CMAKE_MAKE_PROGRAM",
@@ -887,7 +887,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-nm"
+			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-nm"
 		},
 		{
 			"name" : "CMAKE_NUMBER_OF_MAKEFILES",
@@ -915,7 +915,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-objcopy"
+			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-objcopy"
 		},
 		{
 			"name" : "CMAKE_OBJDUMP",
@@ -931,7 +931,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-objdump"
+			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-objdump"
 		},
 		{
 			"name" : "CMAKE_PLATFORM_INFO_INITIALIZED",
@@ -995,7 +995,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ranlib"
+			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ranlib"
 		},
 		{
 			"name" : "CMAKE_READELF",
@@ -1011,7 +1011,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-readelf"
+			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-readelf"
 		},
 		{
 			"name" : "CMAKE_ROOT",
@@ -1035,7 +1035,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/build/app/intermediates/cxx/Debug/3x4l602w/obj/arm64-v8a"
+			"value" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/build/app/intermediates/cxx/Debug/3x4l602w/obj/x86_64"
 		},
 		{
 			"name" : "CMAKE_SHARED_LINKER_FLAGS",
@@ -1243,7 +1243,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-strip"
+			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-strip"
 		},
 		{
 			"name" : "CMAKE_SUPPRESS_DEVELOPER_ERRORS",
@@ -1303,7 +1303,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/build/cmake/android.toolchain.cmake"
+			"value" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/build/cmake/android.toolchain.cmake"
 		},
 		{
 			"name" : "CMAKE_UNAME",
@@ -1355,7 +1355,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/android/app/.cxx/Debug/3x4l602w/arm64-v8a"
+			"value" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/android/app/.cxx/Debug/3x4l602w/x86_64"
 		},
 		{
 			"name" : "Project_IS_TOP_LEVEL",

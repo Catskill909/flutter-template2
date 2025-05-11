@@ -11,15 +11,15 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/build/cmake/android.toolchain.cmake"
+			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/build/cmake/android.toolchain.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/build/cmake/android-legacy.toolchain.cmake"
+			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/build/cmake/android-legacy.toolchain.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/build/cmake/platforms.cmake"
+			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/build/cmake/platforms.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -28,7 +28,7 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/build/cmake/hooks/pre/Android-Determine.cmake"
+			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/build/cmake/hooks/pre/Android-Determine.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -37,11 +37,11 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/android/app/.cxx/Debug/3x4l602w/x86/CMakeFiles/3.22.1-g37088a8/CMakeSystem.cmake"
+			"path" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/android/app/.cxx/Debug/3x4l602w/arm64-v8a/CMakeFiles/3.22.1-g37088a8/CMakeSystem.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/build/cmake/android.toolchain.cmake"
+			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/build/cmake/android.toolchain.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -55,7 +55,7 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/build/cmake/hooks/pre/Android-Initialize.cmake"
+			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/build/cmake/hooks/pre/Android-Initialize.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -79,7 +79,7 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/build/cmake/hooks/pre/Determine-Compiler.cmake"
+			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/build/cmake/hooks/pre/Determine-Compiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -303,7 +303,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/android/app/.cxx/Debug/3x4l602w/x86/CMakeFiles/3.22.1-g37088a8/CMakeCCompiler.cmake"
+			"path" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/android/app/.cxx/Debug/3x4l602w/arm64-v8a/CMakeFiles/3.22.1-g37088a8/CMakeCCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -537,7 +537,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/android/app/.cxx/Debug/3x4l602w/x86/CMakeFiles/3.22.1-g37088a8/CMakeCXXCompiler.cmake"
+			"path" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/android/app/.cxx/Debug/3x4l602w/arm64-v8a/CMakeFiles/3.22.1-g37088a8/CMakeCXXCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -561,7 +561,7 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/build/cmake/hooks/pre/Android.cmake"
+			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/build/cmake/hooks/pre/Android.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -620,11 +620,11 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/build/cmake/hooks/pre/Android-Clang.cmake"
+			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/build/cmake/hooks/pre/Android-Clang.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/26.3.11579264/build/cmake/flags.cmake"
+			"path" : "/Users/paulhenshaw/Library/Android/sdk/ndk/27.0.12077973/build/cmake/flags.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -688,7 +688,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/android/app/.cxx/Debug/3x4l602w/x86/CMakeFiles/3.22.1-g37088a8/CMakeCCompiler.cmake"
+			"path" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/android/app/.cxx/Debug/3x4l602w/arm64-v8a/CMakeFiles/3.22.1-g37088a8/CMakeCCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -782,13 +782,13 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/android/app/.cxx/Debug/3x4l602w/x86/CMakeFiles/3.22.1-g37088a8/CMakeCXXCompiler.cmake"
+			"path" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/android/app/.cxx/Debug/3x4l602w/arm64-v8a/CMakeFiles/3.22.1-g37088a8/CMakeCXXCompiler.cmake"
 		}
 	],
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/android/app/.cxx/Debug/3x4l602w/x86",
+		"build" : "/Users/paulhenshaw/Documents/augment-projects/testing/flutter_template_app/android/app/.cxx/Debug/3x4l602w/arm64-v8a",
 		"source" : "/Users/paulhenshaw/flutter/packages/flutter_tools/gradle/src/main/groovy"
 	},
 	"version" : 
