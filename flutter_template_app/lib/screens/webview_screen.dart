@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+/// WebView screen for displaying web content within the app
 class WebViewScreen extends StatefulWidget {
   final String url;
   final String title;
@@ -42,16 +42,14 @@ class _WebViewScreenState extends State<WebViewScreen> {
       debugPrint('ERROR parsing URL: $e');
     }
 
-    // Configure WebView for iOS
-    if (Platform.isIOS) {
-      debugPrint('Configuring WebView for iOS');
-      InAppWebViewController.setWebContentsDebuggingEnabled(true);
-    }
+    // Enable WebView debugging for development
+    InAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
 
   @override
   Widget build(BuildContext context) {
     debugPrint('WebViewScreen - building with URL: ${widget.url}');
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -79,23 +77,6 @@ class _WebViewScreenState extends State<WebViewScreen> {
           IconButton(
             icon: const Icon(Icons.open_in_browser),
             onPressed: () async {
-              // Try to get current URL first
-              final url = await webViewController?.getUrl();
-              if (url != null) {
-                final Uri uri = Uri.parse(url.toString());
-                await launchExternalBrowser(uri);
-              } else {
-                // Fallback to original URL
-                final Uri uri = Uri.parse(widget.url);
-                await launchExternalBrowser(uri);
-              }
-            },
-          ),
-          // Safari button (specifically for iOS)
-          IconButton(
-            icon: const Icon(Icons.ios_share),
-            tooltip: 'Open in Safari',
-            onPressed: () {
               final Uri uri = Uri.parse(widget.url);
               launchUrl(uri, mode: LaunchMode.externalApplication);
             },
@@ -117,97 +98,44 @@ class _WebViewScreenState extends State<WebViewScreen> {
           Expanded(
             child: InAppWebView(
               key: webViewKey,
-              // Use a simpler URL initialization for iOS
+              // Simple URL initialization that works on both iOS and Android
               initialUrlRequest: URLRequest(
                 url: WebUri(_ensureUrlHasScheme(widget.url)),
               ),
+              // Minimal settings that work on both platforms
               initialSettings: InAppWebViewSettings(
-                // Basic settings that should work on iOS
                 javaScriptEnabled: true,
                 javaScriptCanOpenWindowsAutomatically: true,
-
                 // iOS-specific settings
                 allowsInlineMediaPlayback: true,
-
-                // Disable settings that might cause issues on iOS
-                useOnLoadResource: false,
-                useShouldOverrideUrlLoading: false,
-                mediaPlaybackRequiresUserGesture: false,
-
-                // Add iOS-specific settings
-                transparentBackground: true,
-                disableVerticalScroll: false,
-                disableHorizontalScroll: false,
-                disableContextMenu: false,
-                supportZoom: true,
               ),
               onWebViewCreated: (controller) {
                 webViewController = controller;
-
-                // Try loading the URL directly after WebView is created
-                // This can help on iOS where the initialUrlRequest might not work properly
-                debugPrint(
-                    "WebView created, loading URL directly: ${widget.url}");
-
-                // Try direct loading with a different approach for iOS
-                if (Platform.isIOS) {
-                  debugPrint("Using iOS-specific loading approach");
-
-                  // First load a blank page to ensure WebView is initialized properly
-                  controller.loadUrl(
-                    urlRequest: URLRequest(
-                      url: WebUri("about:blank"),
-                    ),
-                  );
-
-                  // Then load the actual URL after a short delay
-                  Future.delayed(const Duration(milliseconds: 500), () {
-                    debugPrint(
-                        "Now loading the actual URL after delay: ${widget.url}");
-                    controller.loadUrl(
-                      urlRequest: URLRequest(
-                        url: WebUri(_ensureUrlHasScheme(widget.url)),
-                        headers: {
-                          "Accept":
-                              "text/html,application/xhtml+xml,application/xml",
-                          "Cache-Control": "no-cache",
-                        },
-                      ),
-                    );
-                  });
-                } else {
-                  // For Android, load directly
-                  controller.loadUrl(
-                    urlRequest: URLRequest(
-                      url: WebUri(_ensureUrlHasScheme(widget.url)),
-                    ),
-                  );
-                }
+                debugPrint('WebViewScreen - WebView created');
               },
               onLoadStart: (controller, url) {
+                debugPrint('WebViewScreen - onLoadStart: $url');
                 setState(() {
                   isLoading = true;
                   currentUrl = url.toString();
                 });
               },
               onLoadStop: (controller, url) {
+                debugPrint('WebViewScreen - onLoadStop: $url');
                 setState(() {
                   isLoading = false;
                   currentUrl = url.toString();
                 });
               },
               onProgressChanged: (controller, progress) {
+                debugPrint('WebViewScreen - onProgressChanged: $progress%');
                 setState(() {
                   this.progress = progress / 100;
                 });
               },
-              onConsoleMessage: (controller, consoleMessage) {
-                // Using debugPrint instead of print for development logging
-                debugPrint("Console Message: ${consoleMessage.message}");
-              },
               onReceivedError: (controller, request, error) {
                 debugPrint(
-                    "WebView Error: ${error.description} (${error.type}) - URL: ${request.url}");
+                    'WebViewScreen - onReceivedError: ${error.description} (${error.type}) - URL: ${request.url}');
 
                 // Show error message
                 if (mounted) {

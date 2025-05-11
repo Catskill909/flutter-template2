@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import '../models/dove_article.dart';
 import '../screens/webview_screen.dart';
-import '../screens/simple_webview_screen.dart'; // Import the simplified WebView
 
 class DoveCard extends StatelessWidget {
   final DoveArticle article;
@@ -147,23 +146,10 @@ class DoveCard extends StatelessWidget {
       debugPrint('Added https:// scheme to URL: $finalUrl');
     }
 
-    // Use the simplified WebView for testing
-    // Comment out the line below and uncomment the next block to test with the simplified WebView
-    /*
+    // Navigate to the WebView screen
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => WebViewScreen(
-          url: finalUrl,
-          title: article.title,
-        ),
-      ),
-    );
-    */
-
-    // Test with simplified WebView
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => SimpleWebViewScreen(
           url: finalUrl,
           title: article.title,
         ),
