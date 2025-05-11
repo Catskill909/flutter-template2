@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       : 150, // Fixed height based on screen size
                   child: SafeArea(
                     child: Padding(
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                         left: 16,
                         right: 16,
                         bottom: 16,
@@ -297,12 +297,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.pop(context);
                   },
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
+                const Padding(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 24,
                     vertical: 16,
                   ),
-                  child: const Divider(
+                  child: Divider(
                     color: Colors.white24, // Light divider for dark theme
                     thickness: 1,
                   ),
