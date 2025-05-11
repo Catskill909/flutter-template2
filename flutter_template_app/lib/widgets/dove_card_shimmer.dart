@@ -6,8 +6,12 @@ class DoveCardShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Check if we're in a grid layout (tablet/desktop)
+    final isGridLayout = MediaQuery.of(context).size.width > 600;
+
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: EdgeInsets.symmetric(
+          horizontal: isGridLayout ? 4 : 16, vertical: isGridLayout ? 4 : 8),
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       clipBehavior: Clip.antiAlias,
@@ -19,7 +23,7 @@ class DoveCardShimmer extends StatelessWidget {
           children: [
             // Image placeholder
             Container(
-              height: 180,
+              height: isGridLayout ? 140 : 180,
               color: Colors.white,
             ),
             // Title placeholder

@@ -49,9 +49,21 @@ class _Tab1ScreenState extends State<Tab1Screen> {
   }
 
   Widget _buildLoadingList() {
-    return ListView.builder(
-      padding: const EdgeInsets.only(top: 16, bottom: 24),
-      itemCount: 5,
+    // Determine the number of columns based on screen width
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // Use 2 columns for tablet/desktop (width > 600)
+    final crossAxisCount = screenWidth > 600 ? 2 : 1;
+
+    return GridView.builder(
+      padding: const EdgeInsets.only(top: 16, bottom: 24, left: 8, right: 8),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
+        childAspectRatio: screenWidth > 600 ? 1.0 : 1.2,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
+      ),
+      itemCount: crossAxisCount * 3, // Show more shimmer items for grid
       itemBuilder: (context, index) => const DoveCardShimmer(),
     );
   }
@@ -124,8 +136,22 @@ class _Tab1ScreenState extends State<Tab1Screen> {
   }
 
   Widget _buildArticlesList(List<DoveArticle> articles) {
-    return ListView.builder(
-      padding: const EdgeInsets.only(top: 16, bottom: 24),
+    // Determine the number of columns based on screen width
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // Use 2 columns for tablet/desktop (width > 600)
+    final crossAxisCount = screenWidth > 600 ? 2 : 1;
+
+    return GridView.builder(
+      padding: const EdgeInsets.only(top: 16, bottom: 24, left: 8, right: 8),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
+        childAspectRatio: screenWidth > 600
+            ? 1.0
+            : 1.2, // Adjust aspect ratio for different layouts
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
+      ),
       itemCount: articles.length,
       itemBuilder: (context, index) {
         return DoveCard(article: articles[index]);
