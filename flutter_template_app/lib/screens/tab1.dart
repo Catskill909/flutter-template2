@@ -59,7 +59,9 @@ class _Tab1ScreenState extends State<Tab1Screen> {
       padding: const EdgeInsets.only(top: 16, bottom: 24, left: 8, right: 8),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
-        childAspectRatio: screenWidth > 600 ? 1.0 : 1.2,
+        // Use 16:9 aspect ratio for landscape cards (width:height = 16:9)
+        // For grid items, this is actually 16/9 = 1.78 because it's width/height
+        childAspectRatio: 16 / 9,
         crossAxisSpacing: 8,
         mainAxisSpacing: 8,
       ),
@@ -146,9 +148,9 @@ class _Tab1ScreenState extends State<Tab1Screen> {
       padding: const EdgeInsets.only(top: 16, bottom: 24, left: 8, right: 8),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
-        childAspectRatio: screenWidth > 600
-            ? 1.0
-            : 1.2, // Adjust aspect ratio for different layouts
+        // Use 16:9 aspect ratio for landscape cards (width:height = 16:9)
+        // For grid items, this is actually 16/9 = 1.78 because it's width/height
+        childAspectRatio: 16 / 9,
         crossAxisSpacing: 8,
         mainAxisSpacing: 8,
       ),
