@@ -1,0 +1,10 @@
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.project.sourcePaths": [],
+    "java.project.referencedLibraries": [],
+    "java.project.outputPath": "bin",
+    "java.autobuild.enabled": false,
+    "java.import.gradle.enabled": false,
+    "java.import.maven.enabled": false
+}
