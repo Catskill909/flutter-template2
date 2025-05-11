@@ -20,14 +20,14 @@ class _SimpleWebViewScreenState extends State<SimpleWebViewScreen> {
   InAppWebViewController? webViewController;
   bool isLoading = true;
   double progress = 0;
-  
+
   // Log all lifecycle events
   @override
   void initState() {
     super.initState();
     debugPrint('SimpleWebViewScreen - initState with URL: ${widget.url}');
   }
-  
+
   @override
   void dispose() {
     debugPrint('SimpleWebViewScreen - dispose');
@@ -37,18 +37,21 @@ class _SimpleWebViewScreenState extends State<SimpleWebViewScreen> {
   @override
   Widget build(BuildContext context) {
     debugPrint('SimpleWebViewScreen - building with URL: ${widget.url}');
-    
+
+    // Determine if we're on a tablet/desktop
+    final isLargeScreen = MediaQuery.of(context).size.width > 600;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {
-              webViewController?.reload();
-            },
+        title: Text(
+          widget.title,
+          style: TextStyle(
+            fontSize: isLargeScreen ? 36 : 20, // Much larger font for tablet
+            fontWeight: FontWeight.bold,
           ),
-        ],
+        ),
+        centerTitle: true, // Center the title
+        toolbarHeight: isLargeScreen ? 90 : 56, // Much taller AppBar for tablet
       ),
       body: Column(
         children: [
@@ -87,13 +90,15 @@ class _SimpleWebViewScreenState extends State<SimpleWebViewScreen> {
                 });
               },
               onProgressChanged: (controller, progress) {
-                debugPrint('SimpleWebViewScreen - onProgressChanged: $progress%');
+                debugPrint(
+                    'SimpleWebViewScreen - onProgressChanged: $progress%');
                 setState(() {
                   this.progress = progress / 100;
                 });
               },
               onReceivedError: (controller, request, error) {
-                debugPrint('SimpleWebViewScreen - onReceivedError: ${error.description} (${error.type}) - URL: ${request.url}');
+                debugPrint(
+                    'SimpleWebViewScreen - onReceivedError: ${error.description} (${error.type}) - URL: ${request.url}');
               },
             ),
           ),

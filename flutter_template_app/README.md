@@ -8,7 +8,7 @@ A modern Flutter application template with a clean architecture, bottom navigati
 - **Real-time Data**: Direct integration with WordPress REST API
 - **In-App WebView**: View content within the app using modern WebView
 - **Material Design 3**: Beautiful UI with dark mode support
-- **Responsive Layout**: Works on all screen sizes
+- **Responsive Layout**: Optimized for phones, tablets, and desktops with adaptive UI elements
 - **Pull to Refresh**: Allows users to refresh content
 - **Error Handling**: Graceful error handling and loading states
 - **Image Loading**: Efficient image loading with fallback placeholders
@@ -91,17 +91,21 @@ Future<List<DoveArticle>> fetchDoveArticles() async {
 
 ## WebView Implementation
 
-The app uses `flutter_inappwebview` to display content within the app:
+The app uses `flutter_inappwebview` to display content within the app with cross-platform compatibility:
 
 ```dart
 InAppWebView(
-  initialUrlRequest: URLRequest(url: Uri.parse(url)),
-  initialOptions: InAppWebViewGroupOptions(
-    crossPlatform: InAppWebViewOptions(
-      useShouldOverrideUrlLoading: true,
-      mediaPlaybackRequiresUserGesture: false,
-      javaScriptEnabled: true,
-    ),
+  key: webViewKey,
+  // Simple URL initialization that works on both iOS and Android
+  initialUrlRequest: URLRequest(
+    url: WebUri(_ensureUrlHasScheme(widget.url)),
+  ),
+  // Minimal settings that work on both platforms
+  initialSettings: InAppWebViewSettings(
+    javaScriptEnabled: true,
+    javaScriptCanOpenWindowsAutomatically: true,
+    // iOS-specific settings
+    allowsInlineMediaPlayback: true,
   ),
   onWebViewCreated: (controller) {
     webViewController = controller;
@@ -109,14 +113,40 @@ InAppWebView(
   onLoadStart: (controller, url) {
     setState(() {
       isLoading = true;
+      currentUrl = url.toString();
     });
   },
   onLoadStop: (controller, url) {
     setState(() {
       isLoading = false;
+      currentUrl = url.toString();
     });
   },
 )
+```
+
+### iOS WebView Compatibility
+
+The WebView implementation has been optimized for iOS compatibility:
+
+1. Ensuring all URLs have proper schemes (http:// or https://)
+2. Using simplified WebView settings that work on both platforms
+3. Removing unsupported features that cause crashes on iOS
+4. Using the latest version of flutter_inappwebview (6.0.0+) for iOS 17+ compatibility
+
+```dart
+// Helper method to ensure URL has a scheme (http:// or https://)
+String _ensureUrlHasScheme(String url) {
+  if (url.isEmpty) {
+    return 'https://example.com';
+  }
+
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    return 'https://$url';
+  }
+
+  return url;
+}
 ```
 
 ## Image Handling
@@ -196,6 +226,43 @@ To add new features:
 3. Create new widgets in the `widgets` directory
 4. Update or create screens in the `screens` directory
 
+## Responsive Design
+
+The app is fully responsive and optimized for different screen sizes:
+
+### Tablet and Desktop Optimizations
+
+- **Multi-column Layout**: Automatically switches to 2-column grid on tablets and desktops
+- **Scaled UI Elements**: App bar, icons, and text scale up appropriately on larger screens
+- **Optimized Navigation**: Bottom navigation bar and drawer are enhanced for tablet use
+- **WebView Improvements**: Enhanced WebView experience on tablets with larger controls
+
+```dart
+// Determine if we're on a tablet/desktop
+final isLargeScreen = MediaQuery.of(context).size.width > 600;
+
+return Scaffold(
+  appBar: AppBar(
+    title: Text(
+      widget.title,
+      style: GoogleFonts.oswald(
+        fontWeight: FontWeight.bold,
+        fontSize: isLargeScreen ? 36 : 20, // Much larger font for tablet
+      ),
+    ),
+    centerTitle: true,
+    toolbarHeight: isLargeScreen ? 90 : 56, // Much taller AppBar for tablet
+    leading: IconButton(
+      icon: Icon(
+        Icons.arrow_back,
+        size: isLargeScreen ? 40 : 24, // Much larger icon for tablet
+      ),
+      onPressed: () => Navigator.of(context).pop(),
+    ),
+  ),
+)
+```
+
 ## Best Practices
 
 - Implement proper error handling for all network requests
@@ -203,9 +270,35 @@ To add new features:
 - Follow the established architecture pattern for new features
 - Add comprehensive comments for complex logic
 - Use debugPrint instead of print for debugging
+- Ensure UI elements scale appropriately for different screen sizes
+
+## iOS Configuration
+
+The app has been configured to work properly on iOS devices:
+
+1. WebView functionality has been optimized for iOS compatibility
+2. URL handling has been improved to ensure proper scheme prefixes
+3. iOS-specific settings have been applied to the WebView component
+
+### iOS Troubleshooting
+
+If you encounter issues with the WebView on iOS:
+
+1. Ensure all URLs have proper schemes (http:// or https://)
+2. Check that the flutter_inappwebview package is at version 6.0.0 or higher
+3. Verify that iOS-specific settings are properly configured:
+   ```dart
+   initialSettings: InAppWebViewSettings(
+     javaScriptEnabled: true,
+     javaScriptCanOpenWindowsAutomatically: true,
+     allowsInlineMediaPlayback: true,  // Important for iOS
+   ),
+   ```
+4. For detailed WebView debugging, refer to the [webview-bug.md](./webview-bug.md) documentation
 
 ## Additional Documentation
 
-For more detailed information about Android configuration issues, refer to:
+For more detailed information about platform-specific configuration issues, refer to:
 
 - [android-mess.md](./android-mess.md) - Documentation of Android NDK and Gradle issues and solutions
+- [webview-bug.md](./webview-bug.md) - Documentation of WebView issues and solutions for iOS

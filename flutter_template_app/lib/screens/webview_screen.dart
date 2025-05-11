@@ -47,32 +47,36 @@ class _WebViewScreenState extends State<WebViewScreen> {
   Widget build(BuildContext context) {
     debugPrint('WebViewScreen - building with URL: ${widget.url}');
 
+    // Determine if we're on a tablet/desktop
+    final isLargeScreen = MediaQuery.of(context).size.width > 600;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
           widget.title,
           style: GoogleFonts.oswald(
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: isLargeScreen ? 36 : 20, // Much larger font for tablet
           ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
+        centerTitle: true, // Center the title
+        toolbarHeight: isLargeScreen ? 90 : 56, // Much taller AppBar for tablet
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            size: isLargeScreen ? 40 : 24, // Much larger icon for tablet
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         actions: [
-          // Refresh button
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {
-              webViewController?.reload();
-            },
-          ),
           // Open in browser button
           IconButton(
-            icon: const Icon(Icons.open_in_browser),
+            icon: Icon(
+              Icons.open_in_browser,
+              size: isLargeScreen ? 40 : 24, // Much larger icon for tablet
+            ),
             onPressed: () async {
               final Uri uri = Uri.parse(widget.url);
               launchUrl(uri, mode: LaunchMode.externalApplication);
